@@ -1,4 +1,10 @@
-function x=sarrus(A,b)
+%function x=sarrus(A,b)
+clc
+clear all
+
+
+A=[1 2 3; 1 -2 4; 0 -2 1];
+b=[2;7;3];
 
 n=length(b);
 %  for l=1:n
