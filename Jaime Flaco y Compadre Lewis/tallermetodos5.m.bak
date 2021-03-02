@@ -10,6 +10,9 @@ vec_coef1 = zeros(1,grado1+1);
     vec_coef1(i)=vari1;
   end
 
+disp(vec_coef1);
+
+
 vec_coef2 = zeros(1,2);
 disp('Ingrese los coeficientes su polinomio de grado 1:');
 for i = 1:(2)
@@ -21,24 +24,12 @@ end
 x = -(vec_coef2(2)/vec_coef2(1));
 n = vec_coef1(1);
 
-vec_sol = zeros(1,grado1-1);
 
 for i=1:grado1+1
- 
-  if i<grado1+1
-   vec_sol(i)=n;
-   n = (n*x)+ vec_coef1(i+1);  
-  end
-  
-end
-disp("SOLUCION\n");
-
-fprintf("q(x) = [");
-
-for i=1:length(vec_sol)
-  fprintf("%d ",vec_sol(i));
+    if i<grado1+1
+    n = (n*x)+ vec_coef1(i+1);
+    end
 end
 
-fprintf("]");
-fprintf("\nr(x)= %d\n",n);
+disp(n);
 
