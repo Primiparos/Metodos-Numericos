@@ -8,3 +8,6 @@ function eliminacionporcolumna(A)
  end
 x=A
 end
+%valores
+%A=[1 2 3; 1 -2 4; 0 -2 1];
+%b=[2;7;3];
