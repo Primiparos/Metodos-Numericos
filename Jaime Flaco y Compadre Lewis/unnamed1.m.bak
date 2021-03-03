@@ -1,0 +1,9 @@
+
+n=input("el limite: ");
+
+for i=1:n
+  disp("ingres un numero carecopa");
+  vec(i)=input("");
+end
+
+disp(vec);

@@ -1,8 +1,10 @@
+% Punto 1.
+% Escriba un algoritmo que pruebe si una matriz es simétrica o no.
+
 clc
 clear all
-%a = [2 1 2; 1 2 3; 2 3 2];
-n = input("Ingrese el tamaio de su matriz n x n: ");
-matriz = zeros(1, n);
+
+n = input("Ingrese el tamanio de su matriz n x n: ");
 
 for i = 1:n
  for j = 1:n
@@ -20,9 +22,11 @@ for i = 1:n
     end
   end
 end
+
 disp("\n");
 disp(matriz);
 disp("\n");
+
 if bool == 1
   disp("La matriz es simetrica");
 else
