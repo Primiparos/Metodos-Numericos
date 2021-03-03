@@ -4,6 +4,9 @@
 % 2.- Elabore un script que capture una función matemática, su dominio y 
 %        la grafique con las convenciones requeridas (titulo, ejes, etc.).
 %
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez 
+%
 %-------------------------------------------------------------------------
 %-------------------------------------------------------------------------
 

@@ -9,6 +9,9 @@
 %     despues de haber hecho la transposición
 %    *Todos los elementos deben ser iguales
 %
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez 
+%
 %-------------------------------------------------------------------------
 %-------------------------------------------------------------------------
 
@@ -39,3 +42,5 @@ end
 
 fprintf("fin\n")
 
+%
+%
