@@ -1,0 +1,350 @@
+%------------------------------Taller N°1---------------------------------
+%---------------------------Métodos Númericos-----------------------------
+%
+% 1.- Comprobar si una matriz es simétrica
+%    *Una matriz es simétrica cuando es igual a su traspuesta
+%    *La matriz debe ser una matriz cuadrada (el número de filas debe ser
+%     igual al número de columnas NxN)
+%    *los elementos de la diagonal principal deberán permanecer fijos
+%     despues de haber hecho la transposición
+%    *Todos los elementos deben ser iguales
+%
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez 
+%
+%-------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
+clc;
+clear all;
+
+disp("Binvenido al programa para comprobar si una matriz es simetrica...")
+
+m = input("Ingrese la matriz :>_ ");
+
+%Primero, comprobamos si la matriz es una matriz cuadrada
+
+[tamX, tamY] = size(m);
+
+if tamX == tamY
+   %Una vez comprabado que la matriz es cuadrada, hacemos su transposición
+   mt = m';
+   %Ahora, comprobamos que la matriz sea igual a su transpuesta
+   if mt == m
+       fprintf("La matriz que ingreso es simétrica.\n")
+   else
+    fprintf("La matriz NO es simétrica.\n")
+   end
+
+else
+    fprintf("La matriz no es cuadrada, por lo tanto, no puede ser simétrica.\n")
+end
+
+fprintf("fin\n")
+
+%
+%
+
+
+%------------------------------Taller N°1---------------------------------
+%---------------------------Métodos Númericos-----------------------------
+%
+% 2.- Elabore un script que capture una función matemática, su dominio y 
+%        la grafique con las convenciones requeridas (titulo, ejes, etc.).
+%
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez 
+%
+%-------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
+clc;
+clear all;
+
+fprintf("Bienvenido al programa para graficar funciones...\n")
+
+%Usamos el parametro "S" en el metodo input para que se pueda guardar
+%la función que ingresemos en la variable a
+a = input('Ingrese la funcion que desea graficar :>_ ', "S");
+%Creamos la variable fun para guardar la función y usando el método inline
+%pasandole por parametro a, que fue donde guardamos la función, le
+%indicamos que se comporte como una función.
+fun=inline(a);
+
+%Capturamos el valor minimo del dominio
+di = input("Ingrese el rango inferior del dominio de la función :>_ ");
+%Capturamos el valor maximo del dominio
+ds = input("Ingrese el rango superior del dominio de la función :>_ ");
+
+valDom = di:ds;
+
+%Dibujamos la función con una linea continua de color rojo (-r)
+plot(valDom,fun(valDom),"-r")
+
+ylabel("Y")
+xlabel("X")
+title("Gráfica " + a)
+
+%
+%
+
+
+%------------------------------Taller N°1---------------------------------
+%---------------------------Métodos Númericos-----------------------------
+%
+% 3.- Crear un algoritmo en octave que resuelva el sistema por dos de los 
+%        siguientes métodos (sustitución, igualación, suma / resta, 
+%        reducción y sarrus / determinantes). 
+%        
+%        [1,2,3;1,-2,4;0,-2,1][a,b,c] = [2;7;3]
+%
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez 
+%
+%-------------------------------------------------------------------------
+%---------------------Método de eliminación de Gauss-----------------------
+%-------------------------------------------------------------------------
+
+clc;
+clear all;
+
+fprintf("Bienvenido al programa para solucionar sistemas de ecuaciones lineales por el método de eliminación de gauss\n")
+
+a = input("Ingrese la matriz con los coeficientes :>_ ");
+
+b = input("Ingrese el vector con las soluciones :>_ ");
+
+%La matriz debe ser cuadrada
+
+%Guardamos el tamaño de la matriz a
+[~, n] = size(a);
+%Juntamos las dos matrices (a y b) para crear la matriz aumentada
+a = [a';b']';
+%Creamos la matriz que va a ir guardando todas las soluciones
+x=zeros(n,1);
+
+%Empezamos a hacer el procedimiento para obtener las soluciones
+%Empezamos con un ciclo for con el parametro p -> pivote la cual
+%ira de 1 hasta n
+
+for p=1:n
+    %k podrá ser todas las filas de una n, con excepción de la fila pivote
+    for k = [1:p-1,p+1:n]
+        %m será el factor de multiplicación al pivote, tal que al sumarlo a la
+        %fila, haga ceros en la columna que se necesite
+        m = -a(k,p)/a(p,p);
+        %Ahora, se actualiza a la fila k
+        a(k,:) = a(k,:) + m*a(p,:);
+    end
+end
+r=a(:, n + 1);
+x = a(:, n + 1)./diag(a);
+
+fprintf("La solución de su matriz es:\n")
+
+disp(x)
+
+%
+%
+
+
+
+%------------------------------Taller N°1----------------------------------
+%---------------------------Métodos Númericos------------------------------
+%
+% 3.- Crear un algoritmo en octave que resuelva el sistema por dos de los 
+%        siguientes métodos (sustitución, igualación, suma / resta, 
+%        reducción y sarrus / determinantes). 
+%        
+%        [1,2,3;1,-2,4;0,-2,1][a,b,c] = [2;7;3]
+%
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez 
+%
+%--------------------------------------------------------------------------
+%---------------------Método de eliminación de Sarrus----------------------
+%--------------------------------------------------------------------------
+
+clc;
+clear all;
+
+fprintf("Bienvenido al programa para solucionar sistemas de ecuaciones lineales por el método de Cramer/Sarrus\n");
+
+a = input("Ingrese la matriz con los coeficientes :>_ ");
+
+b = input("Ingrese el vector con las soluciones :>_ ");
+
+%Sacamos el tamaño (número de componentes) de b.
+n = length(b);
+%Creamos el vector que guardara los resultados de la solución.
+x = zeros(n,1);
+
+%Empezamos el ciclo con la variable k, la cual ira tornando las columnas
+%de la matriz
+for k=1:n
+    %Igualamos la matriz a ak para trabajar con ella sin perderla
+    ak=a;
+    %Ahora, remplazamos la columna k con el vector de resultados b
+    ak(:,k) = b;
+    %Y procedemos a hacer la división de la determinante de la matriz
+    %cambiada ak, sobre el determinante de la matriz normal.
+    %Los determinantes lo hallamos con la función determinante() la cual
+    %implementamos abajo. Guardamos el resultado en la variable x.
+    x(k) = determinante(ak)/determinante(a);
+end
+
+fprintf("La solución de su matriz es:\n")
+
+disp(x)
+
+%--------------------------------------------------------------------------
+
+function d=determinante(a)
+%implementamos una función para hallar las determinantes de matrices, donde
+%   a -> es la matriz a la cual se le va a hallar la determinante
+%   d -> es la determinante de la matriz
+
+    %Guardamos el tamaño de la matriz
+    n = 1:size(a,1);
+    
+    %k será el indentificador de las columnas, por lo tnato, lo haremos 
+    %recorrer desde 1 hasta el tamaño de la matriz
+    for k=1:size(a,1)
+        %Si la matriz es de 1x1
+        if size(a,1) == 1
+            %Entonces sus determinante será la propia matriz 1x1
+            d=a;
+        else
+            %Restringimos la fila 1 porque solo la vamos a usar para
+            %mostrar los coeficientes de las submatrices
+            f=n(n~=1);
+            %Además, la columna debe ser diferente a la columna en k
+            c = n(n~=k);
+            %Ahora, podemos definir los determinantes termino por termino
+            d(k)=((-1)^(1+k))*a(1,k)*determinante(a(f,c));
+            
+            d=sum(d);
+        end
+    end
+end
+
+%
+%
+
+
+%------------------------------Taller N°1---------------------------------
+%---------------------------Métodos Númericos-----------------------------
+%
+% 4.- Desarrolle un algoritmo que calcule el área entre dos puntos [a, b] 
+%       del plano cartesiano. 
+%
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez 
+%
+%-------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
+function Area
+clear all;
+clc;
+
+%Aqui pediremos que el usuario ingrese las coordenadas para calcular el
+%area entre ellas
+v = input("Ingrese la primera coordenada:")
+c = input("Ingrese la segunda coordenada:")
+%este if es para que realize la operacion cuando la x de la primera
+%coordenada sea mayor para poder realizar la operacion
+if v(1)>c(1)
+    %este if es para que realize la operacion cuando la y de la primera
+    %coordenada sea mayor
+    if v(2)>c(2)
+        a=(((v(1)-c(1))*(v(2)+c(2)))/2);
+        %este else es para cuando la y de la segunda coordenada sea mayor
+    else
+        a=(((v(1)-c(1))*(c(2)+v(2)))/2);       
+    end
+        %este else es para cuando la x en la segunda coordenada sea mayor
+else
+    %este if es para que realize la operacion cuando la y de la primera
+    %coordenada sea mayor
+    if v(2)>c(2)
+        a=(((c(1)-v(1))*(v(2)+c(2)))/2);
+        %este else es para cuando la y de la segunda coordenada sea mayor    
+    else
+        a=(((c(1)-v(1))*(c(2)+v(2)))/2);       
+    end
+end    
+
+fprintf("El area entre los dos puntos es: %d\n",a)
+
+%
+%
+
+
+%------------------------------Taller N°1---------------------------------
+%---------------------------Métodos Númericos-----------------------------
+%
+% 5.- Implemente un algoritmo que realice la división sintética entre dos 
+%       polinomios. Aplique las restricciones que este método implica. 
+%
+%   Presentado por:-Fabián Alberto Sánchez Ruiz
+%                  -Jose Daniel Muñoz Gomez     
+%
+%-------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
+function polinomio
+    clear all;
+    clc;
+    %aqui le pedimos al usuario que ingrese los coeficientes que acompañen a
+    %las x
+    x=input("ingrese los coeficientes del primer polinomio:");
+    y=input("ingrese los coeficientes del segundo polinomio:");
+    %Asignamos a una variable el tamaño del segundo polinomio debido a que solo
+    %si el coeficiente tiene un 1 de primer coeficiente podemos realizar la
+    %division
+    n=length(y);
+    %Este if revisa si es 1 el coeficiente del denominador
+    if n-1==1
+        %aqui volvemos negativo el ultimo coeficiente del denominador
+        %proceder a resolver
+        a=-y(end);
+        %este ciclo va a resolver hasta que llegue al ultimo coeficiente del primer polinomio 
+        for i=1:length(x)
+            %aqui resolvemos la multiplicacion del ultimo coeficiente del
+            %denominador con el coeficiente del numerador en la posicion (i)
+            b(i)=a*x(i);
+            %Este if es para que resuelva la suma del resultado de la
+            %multiplicacion con el siguiente coeficiente del numerador
+            if length(b)~= length(x)
+                x(i+1)=x(i+1)+b(i);
+            else 
+                break
+            end
+        end    
+    end    
+ 
+    %Ahora, ponemos a dividir la constante de nuestro vector resultante
+    %sobre la constante del dividendo
+    
+    x(end) = x(end)/y(end)
+    
+    %Codigo para mostrar el vector en su forma polinomica
+
+    i = length(x);
+    cadena = "";
+    j = 1;
+    while i ~= 0 
+        if i - 2 >= 1
+            cadena = x(i)+" + "+cadena + " ";
+        else
+            cadena = x(i)+ " X^" +(j) + " " + cadena + " ";
+            j = j + 1;
+        end
+        i = i - 1;
+    end
+
+    fprintf("El polinomio resultante de la división sintetica es: " + cadena);
+
+%
+%
