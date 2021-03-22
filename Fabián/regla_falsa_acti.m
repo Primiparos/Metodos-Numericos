@@ -1,9 +1,26 @@
+%----------------Actividad Final - 1er Cohorte - Grupo A-------------------
+%---------------------------MÃ©todos NÃºmericos------------------------------
+%
+%   El siguiente script fue realizado para la actividad final del 1er 
+%   corte de la materÃ­a de mÃ©todos nÃºmericos. Sirve para hallar la raiz
+%   de una funciÃ³n entre un intervalo y con un margen de error, con el
+%   mÃ©todo de la regla falsa. La funciÃ³n, el intervalo y el margÃ©n de
+%   error son introducidos por el usuario. Todos los puntos de la 
+%   actividad fueron realizados con el siguiente cÃ³digo.
+%   
+%   Grupo conformado por:
+%           -SebastiÃ¡n Ricardo Cardenas
+%           -FabiÃ¡n Alberto SÃ¡nchez Ruiz
+%
+%-------------------------------------------------------------------------
+%-------------------------------------------------------------------------
+
 clc 
 clear all
 
-%Pedimos la función
+%Pedimos la funciï¿½n
 w = input("Ingrese su funcion: ", "S");
-%Convertimos en función
+%Convertimos en funciï¿½n
 fuc = inline(w);
 %pedimos los datos //
 disp("Ingrese el intervalo: ");
@@ -11,21 +28,21 @@ a = input("Ingrese el primer valor del intervalo: ");
 b = input("Ingrese el segundo valor del intervalo: ");
 e_usuario = input("ingrese el error inicial: ");
 %//
-%Evaluamos los puntos en la función
+%Evaluamos los puntos en la funciï¿½n
 fa = fuc(a);
 fb = fuc(b);
 %Variable iteradora y Xr primero
 ite = 1;
 xr=0;
 
-%Evaluamos esa mondá
+%Evaluamos esa mondï¿½
 if (fa*fb<0)
   fprintf("i   Xn-1      Xn          f(Xn)     |Ea|\n");  
   while(true)
     %Hallamos la xr y evaluamos xr
     xr = b - ((fb)*(a-b)/(fa - fb));
     fxr = fuc(xr);
-  %verificamos que iteración es.
+  %verificamos que iteraciï¿½n es.
   if (ite < 2)
   %hacemos el cambio de coordenadas
       if (fa*fxr<0)
@@ -37,7 +54,7 @@ if (fa*fb<0)
           xp = a;
         end
       end
-      %añadimos a la tabla de datos y sumamos 1na iteración
+      %aï¿½adimos a la tabla de datos y sumamos 1na iteraciï¿½n
       fprintf("%d   %0.5f   %0.5f     %0.5f   ---- \n",ite,xp,xr,fxr);
       ite = ite + 1;
     else
@@ -58,7 +75,7 @@ if (fa*fb<0)
           end
         end
       end
-      %Añadimos a la tabla y sumamos una iteración
+      %Aï¿½adimos a la tabla y sumamos una iteraciï¿½n
       fprintf("%d   %0.5f   %0.5f     %0.5f   %0.5f \n",ite,xp,xr,fxr,Ea);
       ite = ite + 1;
     end
@@ -66,6 +83,6 @@ if (fa*fb<0)
   end
   fprintf("Finalmente tenemos la raiz: Xr = %0.7f",xr);
 else
-disp("No mijito, no se puede");
+disp("No hay raices");
 end
  
