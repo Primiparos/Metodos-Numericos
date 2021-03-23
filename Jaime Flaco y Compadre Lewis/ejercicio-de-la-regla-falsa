@@ -1,0 +1,130 @@
+
+%%
+%
+%Metodos Numericos
+%RUIZ MELENDRES JAIME ANDRES
+%Este programa aproxima por el metodo de falsa
+%posicion a la raiz de sqrt(x) - cos(x)
+clc;clear;
+format long
+
+%%
+% MUENTRA DE EJERCICIOS$
+%Constantes
+maxi = 10000; %numero maximo de iteraciones
+%cifras = 6; %cantidad de cifras minimas de la aproximacion
+
+x1=sprintf('\n\nElija de las siguientes opciones dependiendo el caso:');
+x2=sprintf('\n\t1. Usando el método de la regla falsa encuentre la raíz aproximada de:\n\t   f(x)=sqrt(x)-cos(x)Iniciando en el intervalo [0  ,  1]  y hasta que |Ea|<10^−5. ' );
+x4=sprintf('\n\t2. A que raíz de: f(x)=(x+2)(x+1)^(2) x(x-1)^(3) (x-2),\n\t   Converge el método de la regla falsa cuando se aplica en\n\t   los siguientes intervalos?');
+x5=sprintf('\n\t 1.  [−3  ,  2.5] ');
+x6=sprintf('\n\t 2.  [-2.5 , 3]');
+x7=sprintf('\n\t 3.  [-1.75 , 1.5]');
+x8=sprintf('\n\t 4.  [-1.5 , 1.75]');
+x10=sprintf('\n\t3. Tanques del occidente , elabora boyas para depósitos de líquidos.\n\tLas boyas son cuerpos esféricos que tienen una gravedad específica de 0.6 y \n\tun radio de 0,5 cm. Se debe calcular la  profundidad a la que se sumerge \n\tla boya cuando flotan en el líquido almacenado. La ecuación que da la profundidad de X \n\ta la cual la boya se encuentra sumergida bajo el líquido es: ');
+x11=sprintf('\tF(x) = x^3 + 0.165x^2 - 3.993x10^-4, Utilice  el método de de la regla falsa para hallar\n\tla profundidad x ​(Cantidad de la boya sumergida),  realice las iteraciones para estimar \n\tla raíz de la anterior ecuación hasta que el error aproximado sea menor 10^-5');
+disp(x1);disp(x2);disp(x4);disp(x5);disp(x6);disp(x7);disp(x8);disp(x10);disp(x11);
+
+
+n = input('\nEscriba la opcion deseada...\n');
+switch n
+    case 1
+        f = @(x)  sqrt(x)-cos(x);
+        t=power(10,-5);
+        reglafalsa(0,1,f,t)
+    case 2
+        
+        f = @(x) (x+2).*power(x+1,2).*x.*power(x-1,3).*(x-2);
+        t=power(10,-5);
+        n = input('\nEscriba la opcion deseada..\n');
+        switch n
+            case 1
+                 a=-3;
+                 b=2.5;
+                reglafalsa(a,b,f,t)
+                
+            case 2
+                 a=-2.5;
+                 b=3;
+                reglafalsa(a,b,f,t)
+               
+                
+            case 3
+                  a=-1.75;
+                 b=1.5;
+                reglafalsa(a,b,f,t)
+                
+            case 4
+                 a=-1.5;
+                 b=1.75;
+                reglafalsa(a,b,f,t)
+        end
+    case 3
+        f = @(x) x.^3 + 0.165.*x.^2 - 3.993.*10.^-4;
+        t=power(10,-4);
+        a=0;
+        b=100;
+        
+        reglafalsa(a,b,f,t)
+        disp('opcion 3');
+    
+end
+%%
+% $CALCULO DE LA REGLA FALSA$
+
+
+
+
+
+
+function y = reglafalsa(a,b,fu,t)
+maxi = 300000000; 
+fuc=fu
+fa=fuc(a)
+fb =fuc(b)
+
+ if (fa * fb < 0)
+      f=fu;s
+xinf = a; % x l inicial
+xsup = b; % x u inicial
+xaprox = 0; % x r
+
+eaprox = inf;
+
+tol = t; %la tolerancia, cifras minimas para acabar
+fprintf(['\n\nMetodo de la regla falsa\n\tEste programa aproxima de forma numerica ', ...
+'\n\tpor el metodo de falsa posicion, los ceros de una funcion,', ...
+'\n\tcuya f(x) = sqrt(x) - cos(x)',...
+'\n\nAproximacion', ...
+'\nes decir, una tolerancia de %f %%\n\n', ...
+'\n i', ...
+'\t|Xn-1','\t        |Xn','\t        |Xn+1','\t        |F(n+1)\t','\t   |Ea| '...
+], tol);
+
+for i = 1:(maxi)
+	xpast = xaprox;
+	xaprox = xsup -f(xsup)*(xsup - xinf)/(f(xsup)-f(xinf)); %agrega la nueva aproximacion al vector
+	signo = f(xinf)*f(xaprox); %evaluacion de subintervalo
+    fprintf(['\n%d','\t|%0.7f','\t|%0.7f','\t|%0.7f','\t|%0.7f'],i,xinf,xsup,xaprox,signo)
+    if (i ~= 1)
+		eaprox = abs((1-xpast/xaprox)*100);
+        fprintf('\t|%f',eaprox)
+    else
+        fprintf('\t|\t')
+    end
+	if (signo < 0)
+		xsup = xaprox; 	
+    elseif (signo > 0)
+		xinf = xaprox;
+    end
+	if (eaprox <= tol)
+		break;
+    end
+   end
+ else
+     error('---No hay una raíz en ese intervalo!---'); 
+   
+    end
+
+
+end
